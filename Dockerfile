@@ -55,4 +55,10 @@ RUN chown -R nobody: /app
 USER nobody
 
 ENV HOME=/app
+# 2 ways to migrate + start app
+# 1. uncomment COPY entrypoint.sh . and exec this to migrate + bin start
 CMD ["bash", "/app/entrypoint.sh"]
+
+# 2. self migrate: heroku run bash -> /app/bin/hello_docker_heroku eval HelloDockerHeroku.Release.migrate
+# or /app/bin/hello_docker_heroku eval 'HelloDockerHeroku.Release.rollback(version)'
+# CMD ["/app/bin/hello_docker_heroku", "start"]

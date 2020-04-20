@@ -10,11 +10,17 @@ import Config
 # db_username = System.get_env("DATABASE_USER") || "postgres"
 # db_password = System.get_env("DATABASE_PASSWORD") || "postgres"
 # db_url = "ecto://#{db_username}:#{db_password}@#{db_host}/#{db_database}"
-db_url = System.get_env("DATABASE_URL")
+
+# db_url = "ecto://postgres:postgres@localhost/hello_docker_heroku_dev"
+db_url =
+  System.get_env("DATABASE_URL") ||
+    raise """
+    environment variable DATABASE_URL is missing.
+    """
 
 config :hello_docker_heroku, HelloDockerHeroku.Repo,
-  ssl: true,
   url: db_url,
+  # ssl: true,
   pool_size: String.to_integer(System.get_env("POOL_SIZE") || "10")
 
 secret_key_base =

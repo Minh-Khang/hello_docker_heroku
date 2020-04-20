@@ -12,6 +12,16 @@ defmodule HelloDockerHeroku.Release do
     {:ok, _, _} = Ecto.Migrator.with_repo(repo, &Ecto.Migrator.run(&1, :down, to: version))
   end
 
+  def rollback(version) do
+    Application.load(@app)
+    Application.ensure_all_started(:ecto_sql)
+
+    Ecto.Migrator.with_repo(
+      HelloDockerHeroku.Repo,
+      &Ecto.Migrator.run(&1, :down, to: version)
+    )
+  end
+
   defp repos do
     Application.load(@app)
     Application.fetch_env!(@app, :ecto_repos)
