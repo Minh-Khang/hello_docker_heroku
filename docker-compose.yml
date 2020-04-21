@@ -11,8 +11,8 @@ services:
     build:
       context: .
     environment:
-      - SECRET_KEY_BASE=${SECRET_KEY_BASE}
-      - DATABASE_DB=${DATABASE_DB}
+      - SECRET_KEY_BASE=${SECRET_KEY_BASE} # export SECRET_KEY_BASE=$(mix phx.gen.secret)
+      - DATABASE_DB=${DATABASE_DB} # same as release.exs export DATABASE_DB=hello_docker_heroku_dev
       - DATABASE_HOST=db
     ports:
       - 4000:4000
